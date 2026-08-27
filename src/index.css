@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== Print layout ===== */
+/* The dedicated print sheet is invisible on screen and revealed only when
+   printing; the main app UI is hidden in its place. */
+
+.print-only {
+  display: none;
+}
+
+@media print {
+  /* Hide the entire interactive app. */
+  .app-screen {
+    display: none !important;
+  }
+
+  /* Reveal the print sheet. */
+  .print-only {
+    display: block !important;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  @page {
+    size: A4 landscape;
+    margin: 8mm;
+  }
+
+  .print-page {
+    width: 100%;
+    color: #000;
+    font-family: "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+  }
+
+  .print-header-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin: 0 0 1mm;
+  }
+
+  .print-title {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+    color: #000;
+  }
+
+  .print-date {
+    font-size: 11px;
+    font-weight: 700;
+    color: #333;
+  }
+
+  .print-subtitle {
+    margin: 0 0 2mm;
+    font-size: 9px;
+    text-align: center;
+    color: #333;
+  }
+
+  /* A4 landscape printable area: 281mm wide × 195mm tall (297×210 minus
+     8mm margins). With 10 rows + header, each row gets ~17mm of height —
+     large enough for tall barcodes with generous quiet zones. */
+  .print-table {
+    width: 100%;
+    height: 180mm;
+    border-collapse: collapse;
+    table-layout: fixed;
+    box-sizing: border-box;
+  }
+
+  .print-table th,
+  .print-table td {
+    border: 1px solid #333;
+    padding: 8px 12px;
+    text-align: center;
+    vertical-align: middle;
+    color: #000;
+    box-sizing: border-box;
+  }
+
+  .print-table th {
+    font-size: 11px;
+    font-weight: 700;
+    background: #eee;
+  }
+
+  .print-table td {
+    font-size: 10px;
+  }
+
+  .print-table tbody tr {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .col-no {
+    width: 7%;
+    font-weight: 700;
+  }
+
+  /* High-contrast barcode cells: white background, black bars. */
+  .print-barcode {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+    background: #ffffff;
+  }
+
+  .print-empty {
+    min-height: 40px;
+  }
+}
